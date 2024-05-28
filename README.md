@@ -1,4 +1,4 @@
-# idGenerator 관련 내용
+# ID-Generator 관련 내용
 
 7장 ID 생성기 관련 내용입니다.
 notion: https://www.notion.so/7-ID-57bc5ecd72fd43e1889c38204f66299a?pvs=4
