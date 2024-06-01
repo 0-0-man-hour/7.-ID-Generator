@@ -6,6 +6,22 @@ import java.util.Date;
 public class IdGenerator {
 	
 	 private static final long TWEPOCH = 1288834974657L;
+	 
+	 // SnowFlake기법에서는 Timestamp 41Bit, 서버 Id 5Bit, DC ID 5Bit, SerialNum 12Bit로 구성되어 있다.
+	 private static final long timestampBits = 41L;
+	 private static final long serverIdBits = 5L;
+	 private static final long datacenterIdBits = 5L;
+	 private static final long serialBits = 12L;
+	     
+         private static final long maxServerId = -1L ^ (-1L << serverIdBits);
+         private static final long maxDatacenterId = -1L ^ (-1L << datacenterIdBits);
+	 
+         // 비트 시프트 (경계들만 만들어 놓고 나중에 비트 자리로 움직여줘야 하니까)
+         private final long serialIdShiftFromRight = serialBits; // 왼쪽으로부터 12자리(Bit)까지가 SerialNum자리
+         private final long datacenterIdShiftFromRight = serialBits + serverIdBits; // 왼쪽에서 17부터는 데이터 센터 Id 자리 
+         private final long timestampLeftShiftFromRight = serialBits + serverIdBits + datacenterIdBits; // 왼쪽에서 22부터는 41자리까지 timestamp자리
+         private final long sequenceMask = -1L ^ (-1L << serialBits);
+	 
 	
 
 	public static void main(String[] args) {
@@ -21,6 +37,7 @@ public class IdGenerator {
         //확인작업 (다시 timeStampe로 바꿨을때 잘 나오는지 확인)
         bitToTimeStamp(binaryTimeStamp);
 
+        //여기서 생각을 그냥 비트 연산한다고 생각해야 한다. 그냥 Long Type(64bit 박아놓고)
        
         
 //        sb.append(timestamp).append(serverId).append(serverId).append(serialNum);
@@ -97,18 +114,18 @@ public class IdGenerator {
 	}
 	
 	
-	// And Operator
+	// And Operator &
 	
 	
-	// Or Operator
+	// Or Operator |
 	
 	
-	// XOR Operator
+	// XOR Operator ^
 	
 	
-	// Not Operator
+	// Not Operator ~
 	
 	
-	// Shift Operator
+	// Shift Operator << >>
 	
 }
