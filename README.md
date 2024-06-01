@@ -15,7 +15,10 @@ notion: https://www.notion.so/7-ID-57bc5ecd72fd43e1889c38204f66299a?pvs=4
 - 2주차. 트래픽 발생 테스트 성능테스트 및 튜닝 
 
 ### 상세 설계  
-
+- 구현 1주차: 주 내용중 하나는 자바에서 bit연산 하는 방법과 String 형태와 bit사이의 전환을 주로 다루고 있다.
+  - 그리고 Id Generator를 만들고 Library화 하는것까지가 일단 ID생성기 구현의 목표이다.
+ 
+     
 
 ### 주요 기능
 
