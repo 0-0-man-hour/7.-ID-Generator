@@ -1,33 +1,80 @@
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 
 public class BitOperator {
+	
+	 private static final long TWEPOCH = 1288834974657L;
+	
 
 	public static void main(String[] args) {
 		
-		long num = 5;
-		
-		System.out.println(Long.toBinaryString(num));
-
-		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 		
-		long epochTime = 297616116568L;
+		StringBuilder sb = new StringBuilder();
 		
-		long timeInMillis =System.currentTimeMillis();
+        //사용할 zone 아이디 값 입니다.
+        ZoneId zoneid = ZoneId.of("Asia/Seoul");
+
+        //#1. 현재 시간의 값 밀리세컨드 변환
+        long timestamp = LocalDateTime.now().atZone(zoneid).toInstant().toEpochMilli();
+        
+        System.out.println(timestamp);
+        
+        System.out.println(Long.toBinaryString(timestamp));
+        System.out.println(Long.toBinaryString(timestamp).length());
+        
+        System.out.println(Long.parseLong(Long.toBinaryString(timestamp), 2));
+        
+       
+        
+        sb.append(timestamp).append(serverId).append(serverId).append(serialNum);
+        
+        
+        
+        
+        
+        System.out.println(Long.toBinaryString(TWEPOCH));
+        
+        Date timeInDate = new Date(TWEPOCH);
+        String timeInFormat = sdf.format(timeInDate);
+        
+        System.out.println(timeInFormat);
+        
+        String last41 = "11111111111111111111111111111111111111111";
+        
+
+        int a = 5;
 		
-		Date timeInDate = new Date(timeInMillis);
-		String timeInFormat = sdf.format(timeInDate);
+		String b = Integer.toBinaryString(a);
 		
-		Date timeInDate1 = new Date(epochTime);
-		String timeInFormat1 = sdf.format(timeInDate1);
-		 
-		System.out.println(epochTime);
-		System.out.println(timeInMillis);
+		System.out.println(b);
 		
-		System.out.println(timeInFormat);
-		System.out.println(timeInFormat1);
+		String c = "1001";
+		
+		int d = 1001;
+		
+		System.out.println(Integer.toString(d));
+		
+		
+
 		
 	}
-
+	
+	// And Operator
+	
+	
+	// Or Operator
+	
+	
+	// XOR Operator
+	
+	
+	// Not Operator
+	
+	
+	// Shift Operator
+	
 }
