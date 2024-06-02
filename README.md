@@ -32,4 +32,5 @@ notion: https://www.notion.so/7-ID-57bc5ecd72fd43e1889c38204f66299a?pvs=4
 
 ### 특이사항
 - 자바에서 String이나 Object Type사용은 최대한 지양하려고 했다. 대용량이고 애시당초 SnowFlake기법 자체가 bit기반으로 되어 있기때문에 bit연산자를 이용해서 연산함.
+- 성능 테스트 도구 <a href="https://www.lesstif.com/software-architect/wrk-modern-http-bench-marking-tool-106856711.html"> 성능테스트 도구 링크 </a>
 
