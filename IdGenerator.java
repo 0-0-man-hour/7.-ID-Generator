@@ -1,75 +1,94 @@
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Date;
 
 public class IdGenerator {
 	
-	 private static final long TWEPOCH = 1288834974657L;
+	private static final long twEpoch = 1288834974657L;
 	 
-	 // SnowFlake기법에서는 Timestamp 41Bit, 서버 Id 5Bit, DC ID 5Bit, SerialNum 12Bit로 구성되어 있다.
-	 private static final long timestampBits = 41L;
-	 private static final long serverIdBits = 5L;
-	 private static final long datacenterIdBits = 5L;
-	 private static final long serialBits = 12L;
-	     
-         private static final long maxServerId = -1L ^ (-1L << serverIdBits);
-         private static final long maxDatacenterId = -1L ^ (-1L << datacenterIdBits);
+	// SnowFlake기법에서는 Timestamp 41Bit, 서버 Id 5Bit, DC ID 5Bit, SerialNum 12Bit로 구성되어 있다.
+	private static final long timestampBits = 41L;
+        private static final long serverIdBits = 5L;
+     	private static final long datacenterIdBits = 5L;
+     	private static final long serialBits = 12L;
+     
 	 
-         // 비트 시프트 (경계들만 만들어 놓고 나중에 비트 자리로 움직여줘야 하니까)
-         private final long serialIdShiftFromRight = serialBits; // 왼쪽으로부터 12자리(Bit)까지가 SerialNum자리
-         private final long datacenterIdShiftFromRight = serialBits + serverIdBits; // 왼쪽에서 17부터는 데이터 센터 Id 자리 
-         private final long timestampLeftShiftFromRight = serialBits + serverIdBits + datacenterIdBits; // 왼쪽에서 22부터는 41자리까지 timestamp자리
-         private final long sequenceMask = -1L ^ (-1L << serialBits);
-	 
+    	// 비트 시프트 (경계들만 만들어 놓고 나중에 비트 자리로 움직여줘야 하니까)
+   	private static final long serialIdShiftFromRight = serialBits; // 왼쪽으로부터 12자리(Bit)까지가 SerialNum자리
+    	private static final long datacenterIdShiftFromRight = serialBits + serverIdBits; // 왼쪽에서 17부터는 데이터 센터 Id 자리 
+     	private static final long timestampLeftShiftFromRight = serialBits + serverIdBits + datacenterIdBits; // 왼쪽에서 22부터는 41자리까지 timestamp자리
+     	private static final long signLeftShiftFromRight = serialBits + serverIdBits + datacenterIdBits + timestampBits;
+
+     	// 기준이되는 값을 관리한다. serial이 한 바퀴 돌았을때 마스킹한다던지
+     	private static final long maxServerId = -1L ^ (-1L << serverIdBits);
+     	private static final long maxDatacenterId = -1L ^ (-1L << datacenterIdBits);
+     	private static final long serialMask = -1L ^ (-1L << serialBits);
+     
+     	// 초기 stamp값
+     	private static long oldTimestamp = -1L;
+     	private static long serialNum = 1L;
 	
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+		long serverId = 1L;
+		long dataCenterId = 1L;
+
+		//generate Id
+		long newId = generateNewId(serverId, dataCenterId);
+        
+        
+        System.out.println(newId);
+       
+        //처음에는 비트연산자를 쓸수 없어서 그냥 String으로 다 더해서변환할 생각을 했다. 
+        
 		
-		StringBuilder sb = new StringBuilder();
+
+		
+	}
+	
+	// Generate Next Id (SerialNum 동시성 처리 문제만 확인하면)
+	public static synchronized long generateNewId(long serverId, long dataCenterId) throws Exception {
 		
 		//현재 시각 milliSeconds로 얻고 binary로 변환
 		long timestamp = getCurrentTimeStamp();
-        String binaryTimeStamp = timeStampToBit(timestamp);
-
-        //확인작업 (다시 timeStampe로 바꿨을때 잘 나오는지 확인)
-        bitToTimeStamp(binaryTimeStamp);
-
+		
         //여기서 생각을 그냥 비트 연산한다고 생각해야 한다. 그냥 Long Type(64bit 박아놓고)
-       
-        
-//        sb.append(timestamp).append(serverId).append(serverId).append(serialNum);
-        
-        
-        
-        
-        
-        System.out.println(Long.toBinaryString(TWEPOCH));
-        
-        Date timeInDate = new Date(TWEPOCH);
-        String timeInFormat = sdf.format(timeInDate);
-        
-        System.out.println(timeInFormat);
-        
-        String last41 = "11111111111111111111111111111111111111111";
-        
+        long signedId = 1L;
+        long timestampId = timestamp - twEpoch;
 
-        int a = 5;
-		
-		String b = Integer.toBinaryString(a);
-		
-		System.out.println(b);
-		
-		String c = "1001";
-		
-		int d = 1001;
-		
-		System.out.println(Integer.toString(d));
-		
-		
-
+        
+        //Serial Number 증가 
+        if(timestamp == oldTimestamp) {
+        	
+        	serialNum = (serialNum + 1) & serialMask;
+        	
+        	//만약 2^11 -> 4096개 Serial Num를 다 사용하게 된다면?
+        	
+        }else {
+        	//달라지면 초기화 해준다.
+        	serialNum = 1L; 
+        }
+        
+        
+        
+        //이전에 기록했던 시간과 비교하기 위
+        oldTimestamp = timestamp;
+        
+        
+        //Bit연사자로 칸수를 띄우면서 만들기 
+        long snowFlakeId = 
+        		signedId << signLeftShiftFromRight |
+        		timestampId << timestampLeftShiftFromRight | 
+        		dataCenterId << datacenterIdShiftFromRight |
+        		serverId << serialIdShiftFromRight |
+        		serialNum;
+        
+        
+        System.out.println("snowFlakeId는: " + snowFlakeId);        
+        System.out.println(Long.toBinaryString(snowFlakeId));
+        System.out.println(Long.toBinaryString(snowFlakeId).length());
+        
+        return snowFlakeId;
 		
 	}
 	
@@ -102,7 +121,7 @@ public class IdGenerator {
 	
 	
 	// Bit to TimeStamp
-	public static long bitToTimeStamp(String binaryTime) {
+	private static long bitToTimeStamp(String binaryTime) {
 		
 		// Binary로 되어 있던걸 다시 timestamp로 변환
 		long timestamp = Long.parseLong(binaryTime, 2); 
@@ -112,20 +131,5 @@ public class IdGenerator {
         return timestamp;
 		
 	}
-	
-	
-	// And Operator &
-	
-	
-	// Or Operator |
-	
-	
-	// XOR Operator ^
-	
-	
-	// Not Operator ~
-	
-	
-	// Shift Operator << >>
-	
+
 }
