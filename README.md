@@ -32,20 +32,20 @@ notion: https://www.notion.so/7-ID-57bc5ecd72fd43e1889c38204f66299a?pvs=4
 - 다음과 같이 main method에 ```SnowFlakeIdGen.jar```를 dependency로 받아와서 ```generateNewId(serverId, dataCenterId)``` method를 사용하면 새로운 Id를 받아올수 있다.
 
   ``` java
-  	public static void main(String[] args) throws Exception {
-  		
-  		SnowFlakeIdGen idGen = new SnowFlakeIdGen();
-  		
-  		long serverId = 1L;
-  		long dataCenterId = 1L;
-  
-  		//generate Id
-  		long newId = idGen.generateNewId(serverId, dataCenterId);
-          
-          
-          System.out.println(newId);
-         
-  	}
+  public static void main(String[] args) throws Exception {
+    
+    SnowFlakeIdGen idGen = new SnowFlakeIdGen();
+    
+    long serverId = 1L;
+    long dataCenterId = 1L;
+
+    //generate Id
+    long newId = idGen.generateNewId(serverId, dataCenterId);
+        
+        
+        System.out.println(newId);
+       
+  }
   ```
 
 
