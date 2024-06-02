@@ -27,6 +27,9 @@ notion: https://www.notion.so/7-ID-57bc5ecd72fd43e1889c38204f66299a?pvs=4
 
 
 ### 사용방법
+- SnowFlakeIdGen.java를 library화할 예정이다 이걸 new연산자로 새로 만들어서 그 안에 generateNewId(serverId, dataCenterId); 만 넣으면 이에 해당하는 Id가 발생한다.
 
 
 ### 특이사항
+- 자바에서 String이나 Object Type사용은 최대한 지양하려고 했다. 대용량이고 애시당초 SnowFlake기법 자체가 bit기반으로 되어 있기때문에 bit연산자를 이용해서 연산함.
+
