@@ -18,6 +18,11 @@ notion: https://www.notion.so/7-ID-57bc5ecd72fd43e1889c38204f66299a?pvs=4
 - 구현 1주차: 주 내용중 하나는 자바에서 bit연산 하는 방법과 String 형태와 bit사이의 전환을 주로 다루고 있다.
   - 그리고 Id Generator를 만들고 Library화 하는것까지가 일단 ID생성기 구현의 목표이다.
  
+- 성능 테스트 도구를 이용해서 각 Application에 10,000 TPS이상의 트래픽을 발생시켜 본다.
+  - 이에 대한 이미지는 다음과 같다.
+
+  <img width="954" alt="image" src="https://github.com/0-0-man-hour/7.ID-Generator/assets/89365465/e41e4553-02ac-4f5d-92c0-a95409156dea">
+  </img>
      
 
 ### 주요 기능
