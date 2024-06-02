@@ -21,8 +21,8 @@ notion: https://www.notion.so/7-ID-57bc5ecd72fd43e1889c38204f66299a?pvs=4
 - 성능 테스트 도구를 이용해서 각 Application에 10,000 TPS이상의 트래픽을 발생시켜 본다.
   - 이에 대한 이미지는 다음과 같다.
 
-  <img width="954" alt="image" src="https://github.com/0-0-man-hour/7.ID-Generator/assets/89365465/e41e4553-02ac-4f5d-92c0-a95409156dea">
-  </img>
+    <img width="954" alt="image" src="https://github.com/0-0-man-hour/7.ID-Generator/assets/89365465/e41e4553-02ac-4f5d-92c0-a95409156dea" width=350 height=500>
+    </img>
      
 
 ### 주요 기능
