@@ -48,6 +48,21 @@ notion: https://www.notion.so/7-ID-57bc5ecd72fd43e1889c38204f66299a?pvs=4
   }
   ```
 
+### Test 
+
+- Nexus 구성 및 hosted Repository에 jar upload
+  
+  <p align="center"> <img width="800" alt="image" src="https://github.com/0-0-man-hour/7.ID-Generator/assets/89365465/d09378a8-53e2-432f-bce4-d86685586747" height=450>
+    </img> </p>
+
+
+- Netty Application에 Snow-Flake-Id-Geneartor 연결 (<b>단, Nexus에 올려서 직접 받아오는건 실패</b>)
+  <p align="center"> <img width="350" alt="image" src="https://github.com/0-0-man-hour/7.ID-Generator/assets/89365465/eaddfa87-19b9-45d7-ae8a-1c5bfe0757c4" height=250>
+    </img> </p>
+  1. 이후 위 application을 jar로 묶어서 각 1, 2서버에 배포
+  2. Macbook으로 Apach bench 수행
+
+
 
 ### 사용방법
 - SnowFlakeIdGen.java를 library화할 예정이다 이걸 new연산자로 새로 만들어서 그 안에 generateNewId(serverId, dataCenterId); 만 넣으면 이에 해당하는 Id가 발생한다.
